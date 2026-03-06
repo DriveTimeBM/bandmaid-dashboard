@@ -50,9 +50,9 @@ export default function Home({ songs }) {
               </Link>
             </h2>
             <p><strong>Album:</strong> {song.Album}</p>
-            <p><strong>Release Date:</strong> {new Date(song.ReleaseDate).toLocaleDateString()}</p>
-            <p><strong>Played Live:</strong> {song.PlayedLiveCount} times</p>
-            <p><strong>Spotify Streams:</strong> {song.SpotifyStreams.toLocaleString()}</p>
+            <p><strong>Release Date:</strong> {song.ReleaseDate ? new Date(song.ReleaseDate).toLocaleDateString() : 'Unknown'}</p>
+            <p><strong>Played Live:</strong> {song.PlayedLiveCount ? song.PlayedLiveCount.toLocaleString() : 'Unknown'} times</p>
+            <p><strong>Spotify Streams:</strong> {song.SpotifyStreams ? song.SpotifyStreams.toLocaleString() : 'Unknown'}</p>
             {song.MediaTieIn && <p><strong>Media Tie-In:</strong> {song.MediaTieIn}</p>}
           </div>
         ))}
