@@ -15,7 +15,11 @@ export async function getStaticProps() {
 export default function Home({ songs }) {
   const [searchTerm, setSearchTerm] = useState('');
 
-  const filteredSongs = songs.filter((song) =>
+  // Sort songs alphabetically by name (A-Z)
+  const sortedSongs = [...songs].sort((a, b) => a.Name.localeCompare(b.Name));
+
+  // Filter sorted songs by search term
+  const filteredSongs = sortedSongs.filter((song) =>
     song.Name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     song.Album.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -40,7 +44,7 @@ export default function Home({ songs }) {
         />
       </div>
 
-      {/* Song List */}
+      {/* Song List (Sorted Alphabetically) */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '20px' }}>
         {filteredSongs.map((song, index) => (
           <div key={index} style={{ border: '1px solid #ddd', padding: '15px', borderRadius: '8px', backgroundColor: '#f9f9f9' }}>
