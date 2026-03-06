@@ -1,4 +1,4 @@
-import { fetchSongs, fetchStreamingLinks, fetchYouTube } from '../../lib/fetchData';
+import { fetchSongs, fetchStreamingLinks, fetchYouTube, fetchSetlists } from '../../lib/fetchData';
 
 // 1. Define which paths to pre-render at build time
 export async function getStaticPaths() {
