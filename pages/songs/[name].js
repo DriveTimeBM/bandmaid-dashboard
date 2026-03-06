@@ -14,14 +14,16 @@ export async function getStaticPaths() {
 
 // 2. Fetch data for each song at build time
 export async function getStaticProps({ params }) {
-  const [songs, streamingLinks, youtube] = await Promise.all([
+  const [songs, streamingLinks, youtube,setlists] = await Promise.all([
     fetchSongs(),
     fetchStreamingLinks(),
     fetchYouTube(),
+    fetchSetlists(),
   ]);
   const song = songs.find((s) => s.Name === params.name);
   const links = streamingLinks.filter((link) => link.Song === params.name);
   const videos = youtube.filter((video) => video.Song === params.name);
+  const sets = setlists.filter((video) => video.Song === params.name);
   return { props: { song, links, videos } };
 }
 
@@ -59,6 +61,18 @@ export default function SongDetail({ song, links, videos }) {
           </li>
         ))}
       </ul>
+
+      <h2>Okyuji</h2>
+      <ul>
+        {sets.map((song, index) => (
+          <li key={index}>
+            <a href={sets.URL} target="_blank" rel="noopener noreferrer">
+            {sets.Date} {sets.Venue} {sets.City} {sets.Country} 
+            </a>
+          </li>
+        ))}
+      </ul>
+
     </div>
   );
 }
