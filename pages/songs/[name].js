@@ -1,4 +1,3 @@
-// Import your data-fetching utilities
 import { fetchSongs, fetchStreamingLinks, fetchYouTube } from '../../lib/fetchData';
 
 // 1. Define which paths to pre-render at build time
@@ -9,7 +8,7 @@ export async function getStaticPaths() {
   }));
   return {
     paths,
-    fallback: false, // or 'blocking' if you want to generate missing pages on demand
+    fallback: false,
   };
 }
 
@@ -31,19 +30,20 @@ export default function SongDetail({ song, links, videos }) {
   if (!song) return <div>Song not found</div>;
 
   return (
-    <div>
+    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px' }}>
       <h1>{song.Name}</h1>
-      <p>Album: {song.Album}</p>
-      <p>Release Date: {song.ReleaseDate}</p>
-      <p>Played Live: {song.PlayedLiveCount} times</p>
-      <p>Spotify Streams: {song.SpotifyStreams}</p>
+      <p><strong>Album:</strong> {song.Album}</p>
+      <p><strong>Release Date:</strong> {song.ReleaseDate ? new Date(song.ReleaseDate).toLocaleDateString() : 'Unknown'}</p>
+      <p><strong>Played Live:</strong> {song.PlayedLiveCount ? song.PlayedLiveCount.toLocaleString() : 'Unknown'} times</p>
+      <p><strong>Spotify Streams:</strong> {song.SpotifyStreams ? song.SpotifyStreams.toLocaleString() : 'Unknown'}</p>
+      {song.MediaTieIn && <p><strong>Media Tie-In:</strong> {song.MediaTieIn}</p>}
 
       <h2>Streaming Links</h2>
       <ul>
         {links.map((link, index) => (
           <li key={index}>
             <a href={link.URL} target="_blank" rel="noopener noreferrer">
-              {link.Service} ({link.Streams} streams)
+              {link.Service} ({link.Streams ? link.Streams.toLocaleString() : 'Unknown'} streams)
             </a>
           </li>
         ))}
@@ -54,7 +54,7 @@ export default function SongDetail({ song, links, videos }) {
         {videos.map((video, index) => (
           <li key={index}>
             <a href={video.URL} target="_blank" rel="noopener noreferrer">
-              {video.Title} ({video.Views} views)
+              {video.Title} ({video.Views ? video.Views.toLocaleString() : 'Unknown'} views)
             </a>
           </li>
         ))}
