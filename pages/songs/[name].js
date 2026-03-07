@@ -90,24 +90,29 @@ export default function SongDetail({ song, links, videos }) {
       </ul>
 
       <h2>Okyuji (Setlists)</h2>
-      {loading ? (
-       <p>Loading setlists...</p>
-      ) : error ? (
-        <p style={{ color: 'red' }}>Failed to load setlists: {error}</p>
-      ) : sets.length > 0 ? (
-      <ul>
-        {sets.map((entry, index) => (
-        <li key={index}>
-         <a href={entry.URL} target="_blank" rel="noopener noreferrer">
-           {entry.Date} - {entry.Venue}, {entry.City}, {entry.Country}
-         </li>
-      ))}
-      </ul>
-      ) : (
-        <p>No setlists found for this song.</p>
-      )}
+{loading ? (
+  <p>Loading setlists...</p>
+) : error ? (
+  <p style={{ color: 'red' }}>Failed to load setlists: {error}</p>
+) : sets.length > 0 ? (
+  <ul>
+    {sets.map((entry, index) => (
+      <li key={index}>
+        <a href={entry.URL} target="_blank" rel="noopener noreferrer">
+          {entry.Date} - {entry.Venue}, {entry.City}, {entry.Country}
+        </a>
+      </li>
+    ))}
+  </ul>
+) : (
+  <p>No setlists found for this song.</p>
+)}
+
 
 
     </div>
+
+
+
   );
 }
