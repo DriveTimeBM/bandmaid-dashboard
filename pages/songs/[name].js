@@ -41,6 +41,10 @@ export default function SongDetail({ song, links, videos }) {
     const fetchSetlists = async () => {
       try {
         const data = await fetchSetlists();
+        console.log("Setlists data:", data); // Log the data
+        if (!Array.isArray(data)) {
+          throw new Error("Setlists data is not an array");
+        }
         const filteredSets = data.filter((set) => set.Song === song.Name);
         setSets(filteredSets);
       } catch (err) {
@@ -52,7 +56,7 @@ export default function SongDetail({ song, links, videos }) {
     };
     fetchSetlists();
   }, [song.Name]);
-
+  
   return (
     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px' }}>
       <h1>{song.Name}</h1>
@@ -89,15 +93,20 @@ export default function SongDetail({ song, links, videos }) {
         <p>Loading setlists...</p>
       ) : error ? (
         <p style={{ color: 'red' }}>Failed to load setlists: {error}</p>
-      ) : (
+      ) : sets.length > 0 ? (
         <ul>
           {sets.map((set, index) => (
             <li key={index}>
-              {set.Date} - {set.Venue}, {set.City}, {set.Country}
-            </li>
-          ))}
-        </ul>
-      )}
+               {set.Date} - {set.Venue}, {set.City}, {set.Country}
+           </li>
+       ))}
+     </ul>
+   ) : (
+     <p>No setlists found for this song.</p>
+   )}
+
+
+
     </div>
   );
 }
